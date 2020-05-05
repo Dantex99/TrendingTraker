@@ -18,18 +18,7 @@
             <Label x:Name="lbl_FrancesEn" Content="Tweets en Frances: " HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="210"/>
         </Grid>
         <Grid x:Name="grd_chart" Margin="10,178,463,10">
-            <lvc:PieChart LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}">
-                <lvc:PieChart.Series>
-                    <lvc:PieSeries Title="Ingles" Values="3" DataLabels="true"
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Español" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Frances" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Otros" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                </lvc:PieChart.Series>
-            </lvc:PieChart>
+            <lvc:PieChart x:Name="myPieChart" StartingRotationAngle="0" Height="120"/>
         </Grid>
     </Grid>
 </Window>

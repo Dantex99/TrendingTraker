@@ -26,6 +26,12 @@ namespace TrendingTraker
     public partial class StatisticsWindow : Window
     {
 
+        //Tweets por idioma
+        int en = 0;
+        int es = 0;
+        int fr = 0;
+        int df = 0;
+
         public StatisticsWindow(String obj)
         {
             InitializeComponent();
@@ -53,10 +59,10 @@ namespace TrendingTraker
         {
 
             int count = 0;
-            int en = 0;
-            int es = 0;
-            int fr = 0;
-            int df = 0;
+            en = 0;
+            es = 0;
+            fr = 0;
+            df = 0;
 
             var stream = Stream.CreateFilteredStream();
             stream.AddTrack(obj);
@@ -105,27 +111,32 @@ namespace TrendingTraker
         #endregion
 
         #region chart
-            private void Chart()
+        private void Chart()
         {
-            PointLabel = chartPoint =>  
-            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
+            myPieChart.Series.Add(new PieSeries { Title = "Ingles", Fill = Brushes.Red, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Español", Fill = Brushes.Green, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Frances", Fill = Brushes.Blue, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            //myPieChart.Series.Add(new PieSeries { Title = "Otros", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<int> { 1 } });
+
+            Thread hiloChart = new Thread(() => RecargarChart());
+            hiloChart.Start();
 
             DataContext = this;
         }
 
-        public Func<ChartPoint, string> PointLabel { get; set; }
-
-        private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
+        private void RecargarChart()
         {
-            var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
-
-            //clear selected slice.
-            foreach (PieSeries series in chart.Series)
-                series.PushOut = 0;
-
-            var selectedSeries = (PieSeries)chartpoint.SeriesView;
-            selectedSeries.PushOut = 8;
+            do
+            {
+                int[] tweets = new[] { en, es, fr, df };
+                for (int i = 0; i < 3; i++)
+                {
+                    myPieChart.Series[i].Values[0] = tweets[i];
+                }
+            } while (true);
         }
+
         #endregion
     }
 }
