@@ -27,10 +27,8 @@ namespace TrendingTraker
     {
 
         //Tweets por idioma
-        int en = 0;
-        int es = 0;
-        int fr = 0;
-        int df = 0;
+        String[] idiomas = { "Ingles", "Español", "Malayo", "Japones", "Portugues", "Frances", "Arábico", "Turco", "Thai", "Coreano", "otros" };
+        int[] tweets = new int[11];
 
         public StatisticsWindow(String obj)
         {
@@ -58,48 +56,61 @@ namespace TrendingTraker
         private void TweetTraker(String obj)
         {
 
-            int count = 0;
-            en = 0;
-            es = 0;
-            fr = 0;
-            df = 0;
-
             var stream = Stream.CreateFilteredStream();
             stream.AddTrack(obj);
             stream.MatchingTweetReceived += (sender, args) =>
             {
-                count++;
-
-                this.Dispatcher.Invoke(() =>
-                {
-
+                
                     switch (args.Tweet.Language.ToString())
                     {
                         case "English":
-                            en++;
-                            lbl_InglesEn.Content = "Tweets en ingles: " + en;
+                            tweets[0]++;
+                            myPieChart.Series[0].Values[0] = tweets[0];
                             break;
 
                         case "Spanish":
-                            es++;
-                            lbl_EspanolEn.Content = "Tweets en español: " + es;
+                            tweets[1]++;
+                            myPieChart.Series[1].Values[0] = tweets[1];
                             break;
 
+                        case "Malayalam":
+                            tweets[2]++;
+                            myPieChart.Series[2].Values[0] = tweets[2];
+                            break;
+                        case "Japanese":
+                            tweets[3]++;
+                            myPieChart.Series[3].Values[0] = tweets[3];
+                            break;
+                        case "Portuguese":
+                            tweets[4]++;
+                            myPieChart.Series[4].Values[0] = tweets[4];
+                            break;
                         case "French":
-                            fr++;
-                            lbl_FrancesEn.Content = "Tweets en frances: " + fr;
+                            tweets[5]++;
+                            myPieChart.Series[5].Values[0] = tweets[5];
+                            break;
+                        case "Arabic":
+                            tweets[6]++;
+                            myPieChart.Series[6].Values[0] = tweets[6];
+                            break;
+                        case "Turkish":
+                            tweets[7]++;
+                            myPieChart.Series[7].Values[0] = tweets[7];
+                            break;
+                        case "Thai":
+                            tweets[8]++;
+                            myPieChart.Series[8].Values[0] = tweets[8];
+                            break;
+                        case "Korean":
+                            tweets[9]++;
+                            myPieChart.Series[9].Values[0] = tweets[9];
                             break;
 
                         default:
-                            df++;
+                            tweets[10]++;
+                            myPieChart.Series[10].Values[0] = tweets[10];
                             break;
                     }
-
-                
-
-                    lbl_Tweets.Content = "Tweets: " + count;
-
-                });
 
 
             };
@@ -113,30 +124,20 @@ namespace TrendingTraker
         #region chart
         private void Chart()
         {
-
-            myPieChart.Series.Add(new PieSeries { Title = "Ingles", Fill = Brushes.Red, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
-            myPieChart.Series.Add(new PieSeries { Title = "Español", Fill = Brushes.Green, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
-            myPieChart.Series.Add(new PieSeries { Title = "Frances", Fill = Brushes.Blue, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
-            //myPieChart.Series.Add(new PieSeries { Title = "Otros", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<int> { 1 } });
-
-            Thread hiloChart = new Thread(() => RecargarChart());
-            hiloChart.Start();
+            myPieChart.Series.Add(new PieSeries { Title = "Ingles", Fill = Brushes.Blue, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Español", Fill = Brushes.Red, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Malayo", Fill = Brushes.Beige, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Japones", Fill = Brushes.WhiteSmoke, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Portugues", Fill = Brushes.Green, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Frances", Fill = Brushes.AliceBlue, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Arábico", Fill = Brushes.Yellow, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Turco", Fill = Brushes.Brown, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Thai", Fill = Brushes.DarkCyan, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Coreano", Fill = Brushes.DarkSalmon, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
+            myPieChart.Series.Add(new PieSeries { Title = "Otros", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<int> { 1 } });
 
             DataContext = this;
         }
-
-        private void RecargarChart()
-        {
-            do
-            {
-                int[] tweets = new[] { en, es, fr, df };
-                for (int i = 0; i < 3; i++)
-                {
-                    myPieChart.Series[i].Values[0] = tweets[i];
-                }
-            } while (true);
-        }
-
         #endregion
     }
 }
