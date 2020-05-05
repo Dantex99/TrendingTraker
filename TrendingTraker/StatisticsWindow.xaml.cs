@@ -15,6 +15,8 @@ using Tweetinvi;
 using System.Threading;
 using Tweetinvi.Parameters;
 using Tweetinvi.Models;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace TrendingTraker
 {
@@ -23,11 +25,6 @@ namespace TrendingTraker
     /// </summary>
     public partial class StatisticsWindow : Window
     {
-        //String de busqueda
-        String obj;
-
-        //Fecha hace una semana
-        DateTime date;
 
         public StatisticsWindow(String obj)
         {
@@ -38,11 +35,13 @@ namespace TrendingTraker
                 "1235663240224559104-3pZyrD0ZVyiK1lTd5OoONBA979nE3e",
                 "hw6OuidUsyT9fSdoLdoxtGt3rZdj2OrUOGB7gMLVBCyrD"
                 );
-            this.obj = obj;
+
+            Chart();
+
             lbl_SelectTt.Content = obj;
 
             //Stream
-            Thread hiloStream = new Thread(() => TweetTraker());
+            Thread hiloStream = new Thread(() => TweetTraker(obj));
 
             hiloStream.Start();
 
@@ -50,13 +49,14 @@ namespace TrendingTraker
 
         //Actividad en vivo del #
         #region Live
-        private void TweetTraker()
+        private void TweetTraker(String obj)
         {
 
             int count = 0;
             int en = 0;
             int es = 0;
             int fr = 0;
+            int df = 0;
 
             var stream = Stream.CreateFilteredStream();
             stream.AddTrack(obj);
@@ -83,6 +83,10 @@ namespace TrendingTraker
                             fr++;
                             lbl_FrancesEn.Content = "Tweets en frances: " + fr;
                             break;
+
+                        default:
+                            df++;
+                            break;
                     }
 
                 
@@ -99,6 +103,29 @@ namespace TrendingTraker
         }
 
         #endregion
-       
+
+        #region chart
+            private void Chart()
+        {
+            PointLabel = chartPoint =>  
+            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
+            DataContext = this;
+        }
+
+        public Func<ChartPoint, string> PointLabel { get; set; }
+
+        private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
+        {
+            var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
+
+            //clear selected slice.
+            foreach (PieSeries series in chart.Series)
+                series.PushOut = 0;
+
+            var selectedSeries = (PieSeries)chartpoint.SeriesView;
+            selectedSeries.PushOut = 8;
+        }
+        #endregion
     }
 }
