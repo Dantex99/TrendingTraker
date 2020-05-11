@@ -29,8 +29,8 @@
             <Grid x:Name="grd_Personal" Margin="95,10,0,153">
                 <Label x:Name="lbl_name" Content="Nombre" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
                 <Image x:Name="img_verificado"  Margin="97,6,332,6" Height="25" Source="img/Verificado.png" />
-                <Label x:Name="lbl_arroba" Content="@Nombre" HorizontalAlignment="Left" Margin="140,6,0,5" VerticalAlignment="Center"/>
-                <Label x:Name="lbl_tiempo" Content=".25 min" HorizontalAlignment="Left" Margin="240,6,0,5" VerticalAlignment="Center"/>
+                <Label x:Name="lbl_arroba" Content="@Nombre" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="lbl_tiempo" Content=".25 min" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Center"/>
             </Grid>
 
             <Label x:Name="lbl_text" Content="Texto" HorizontalAlignment="Left" Margin="105,64,0,0" VerticalAlignment="Top" Width="437" Height="126"/>

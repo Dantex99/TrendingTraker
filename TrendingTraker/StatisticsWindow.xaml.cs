@@ -61,7 +61,7 @@ namespace TrendingTraker
                 hiloStream = new Thread(() => TweetTrakerGlobal(obj));
             }
 
-            
+
             hiloStream.Start();
 
         }
@@ -131,7 +131,7 @@ namespace TrendingTraker
             //Clasifica cada tweet recogido
             stream.MatchingTweetReceived += (sender, args) =>
             {
-                
+
                 //Lenguage
                 switch (args.Tweet.Language.ToString())
                 {
@@ -231,8 +231,8 @@ namespace TrendingTraker
             lbl_text.Content = tweet.Text;
 
             //Interacciones
-            lbl_like.Content = tweet.FavoriteCount;
-            lbl_rt.Content = tweet.RetweetCount;
+            lbl_like.Content = Formato(tweet.FavoriteCount);
+            lbl_rt.Content = Formato(tweet.RetweetCount);
             lbl_com.Content = tweet.ReplyCount;
 
             //Extraemos el usuario
@@ -256,6 +256,23 @@ namespace TrendingTraker
 
             //@Usuario
             lbl_arroba.Content = user.ScreenName;
+        }
+
+        public static string Formato(int number)
+        {
+
+            if (number > 1000)
+            {
+                return string.Format("{0:#,0,k}", number);
+            }
+            else if(number > 0)
+            {
+                return number.ToString();
+            }
+            else
+            {
+                return "0";
+            }
         }
     }
 }
