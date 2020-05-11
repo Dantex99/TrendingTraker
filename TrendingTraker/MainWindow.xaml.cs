@@ -21,6 +21,9 @@ namespace TrendingTraker
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        //Idioma
+        bool idioma = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,15 +33,18 @@ namespace TrendingTraker
                 "1235663240224559104-3pZyrD0ZVyiK1lTd5OoONBA979nE3e",
                 "hw6OuidUsyT9fSdoLdoxtGt3rZdj2OrUOGB7gMLVBCyrD"
                 );
-            setTrendigns();
+
+            //Imprime por pantalla las tendencias
+            setTrendigns(23424950);
 
         }
 
-        private void setTrendigns()
+        private void setTrendigns(int location)
         {
             //Bucle recorriendo los objetos
             int i = 0;
-            var trends = Trends.GetTrendsAt(1);
+
+            var trends = Trends.GetTrendsAt(location);
 
             foreach (TextBlock dr in grd_TL.Children)
             {
@@ -53,9 +59,28 @@ namespace TrendingTraker
         {
             TextBlock clicked = (TextBlock)sender;
             String pos = clicked.Text.Substring(3);
-            StatisticsWindow statistics = new StatisticsWindow(pos);
+            StatisticsWindow statistics = new StatisticsWindow(pos, idioma);
             statistics.Show();
             this.Close();
+        }
+
+        private void btn_location_Click(object sender, RoutedEventArgs e)
+        {
+
+            Button button = (Button)sender;
+
+            if (idioma)
+            {
+                button.Content = "Mundial";
+                idioma = false;
+                setTrendigns(1);
+            }
+            else
+            {
+                button.Content = "España";
+                idioma = true;
+                setTrendigns(23424950);
+            }
         }
     }
 }

@@ -10,14 +10,45 @@
         d:DataContext="{d:DesignInstance local:StatisticsWindow}"
         Title="Statistics" Height="450" Width="800">
     <Grid>
-        <Label x:Name="lbl_SelectTt" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150"/>
-        <Label x:Name="lbl_Tweets" Content="" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="150"/>
-        <Grid x:Name="grd_idiomas" Margin="0,81,572,246">
-            <Label x:Name="lbl_EspanolEn" Content="Tweets en Español: " HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="210"/>
-            <Label x:Name="lbl_InglesEn" Content="Tweets en Ingles: " HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="210"/>
-            <Label x:Name="lbl_FrancesEn" Content="Tweets en Frances: " HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="210"/>
+        <Label x:Name="lbl_SelectTt" Content="" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top"/>
+        <Grid x:Name="grd_data" Margin="0,46,391,215" Width="389">
+            <Separator Margin="0,33,0,115" />
+            <Label x:Name="lbl_tTweets" Content="Tweets TT" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150"/>
+            <Label x:Name="lbl_gTweets" Content="Tweets glb" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" Width="150"/>
+
+            <Label x:Name="lbl_tweetsResp" Content="Respuestas" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="150"/>
+            <Label x:Name="lbl_tweetslik" Content="Likes" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="150"/>
+            <Label x:Name="lbl_tweetsRt" Content="ReTweets" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="150"/>
+            <Label x:Name="lbl_tweetsSec" Content="Tweets/s" HorizontalAlignment="Left" Margin="229,43,0,0" VerticalAlignment="Top" Width="150"/>
+
+
         </Grid>
-        <Grid x:Name="grd_chart" Margin="10,178,463,10">
+        <Grid x:Name="grd_popularTweet" Margin="230,209,10,10">
+            <Image x:Name="image" HorizontalAlignment="Left" Height="80" Margin="10,10,0,0" VerticalAlignment="Top" Width="80"/>
+
+            <Grid x:Name="grd_Personal" Margin="95,21,0,153">
+                <Label x:Name="lbl_name" Content="Nombre" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                <Image x:Name="img_verificado"  Margin="100,3,337,3" Width="20" Height="20" Source="img/Verificado.png" />
+                <Label x:Name="lbl_arroba" Content="@Nombre" HorizontalAlignment="Left" Margin="130,0,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="lbl_tiempo" Content=".25 min" HorizontalAlignment="Left" Margin="230,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Label x:Name="lbl_text" Content="Texto" HorizontalAlignment="Left" Margin="105,64,0,0" VerticalAlignment="Top" Width="437" Height="126"/>
+
+            <Grid x:Name="grd_Interacciones" Margin="10,95,452,0">
+                <Label x:Name="lbl_like" Content="like" HorizontalAlignment="Left" Margin="42,10,0,0" VerticalAlignment="Top" Height="25"/>
+                <Image x:Name="img_like" HorizontalAlignment="Left" Height="20" Margin="10,13,0,0" VerticalAlignment="Top" Width="20" Source="img/Like.png"/>
+                
+                <Label x:Name="lbl_rt" Content="rt" HorizontalAlignment="Left" Margin="42,40,0,0" VerticalAlignment="Top" Height="25"/>
+                <Image x:Name="img_rt" HorizontalAlignment="Left" Height="20" Margin="10,43,0,0" VerticalAlignment="Top" Width="20" Source="img/rt.png"/>
+                
+                <Label x:Name="lbl_com" Content="1,4 mil" HorizontalAlignment="Left" Margin="42,70,0,0" VerticalAlignment="Top" Height="25"/>
+                <Image x:Name="img_com" HorizontalAlignment="Left" Height="20" Margin="10,73,0,0" VerticalAlignment="Top" Width="20" Source="img/Comment.png"/>
+
+            </Grid>
+
+        </Grid>
+        <Grid x:Name="grd_chart" Margin="10,209,582,10">
             <lvc:PieChart x:Name="myPieChart" StartingRotationAngle="0" Height="120"/>
         </Grid>
     </Grid>

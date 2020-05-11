@@ -8,8 +8,8 @@
         Title="TrendingTraker" Height="450" Width="580
         " HorizontalAlignment="Left">
     <Grid x:Name="grd_TT">
+        <Button x:Name="btn_location" Content="España" HorizontalAlignment="Left" Margin="203,128,0,0" VerticalAlignment="Top" Width="166" Click="btn_location_Click"/>
         <Label x:Name="lbl_Title" Content="TrendingTraker" HorizontalAlignment="Center" Margin="0,55,0,0" VerticalAlignment="Top" FontSize="24" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="txb_Browser" HorizontalAlignment="Center" Height="20" Margin="203,125,203,0" TextWrapping="Wrap" Text="#Coronavirus" VerticalAlignment="Top" Width="166" TextAlignment="Center"/>
         <Grid x:Name="grd_TL" Margin="110,153,110,10" Width="350" Height="255">
             <TextBlock x:Name="lbl_Tt1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" PreviewMouseDown="lbl_PreviewMouseDown"/>
             <TextBlock x:Name="lbl_Tt2" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="150" PreviewMouseDown="lbl_PreviewMouseDown"/>
