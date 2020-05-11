@@ -191,5 +191,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\Verificado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Like.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\rt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Comment.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

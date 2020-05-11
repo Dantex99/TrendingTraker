@@ -42,6 +42,8 @@ namespace TrendingTraker
             lbl_SelectTt.Content = obj;
             Thread hiloStream;
 
+            PopularTweetEsp(obj);
+
             if (idioma)
             {
                 //genera las gráficas
@@ -209,9 +211,51 @@ namespace TrendingTraker
         #endregion
         #endregion
 
-        public void PopularTweet()
+        public void PopularTweetEsp(String obj)
         {
+            var searchParameter = new SearchTweetsParameters(obj)
+            {
+                SearchType = SearchResultType.Popular,
+                MaximumNumberOfResults = 1,
+            };
 
+            var tweets = Search.SearchTweets(searchParameter);
+
+            //Extraemos el tweet
+            var tweet = tweets.ToList()[0];
+
+            //Fecha creación
+            lbl_tiempo.Content = tweet.CreatedAt.ToString();
+
+            //Texto
+            lbl_text.Content = tweet.Text;
+
+            //Interacciones
+            lbl_like.Content = tweet.FavoriteCount;
+            lbl_rt.Content = tweet.RetweetCount;
+            lbl_com.Content = tweet.ReplyCount;
+
+            //Extraemos el usuario
+            var user = tweet.CreatedBy;
+
+            //Imagen de perfil
+            img_profile.Source = new BitmapImage(new Uri(user.ProfileImageUrl));
+
+            //Verificado
+            if (!user.Verified)
+            {
+                img_verificado.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                img_verificado.Visibility = Visibility.Visible;
+            }
+
+            //Nombre usuario
+            lbl_name.Content = user.Name;
+
+            //@Usuario
+            lbl_arroba.Content = user.ScreenName;
         }
     }
 }
