@@ -228,7 +228,7 @@ namespace TrendingTraker
             lbl_tiempo.Content = tweet.CreatedAt.ToString();
 
             //Texto
-            lbl_text.Content = tweet.Text;
+            lbl_text.Text = tweet.Text;
 
             //Interacciones
             lbl_like.Content = Formato(tweet.FavoriteCount);

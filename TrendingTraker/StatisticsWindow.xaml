@@ -33,7 +33,7 @@
                 <Label x:Name="lbl_tiempo" Content=".25 min" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Center"/>
             </Grid>
 
-            <Label x:Name="lbl_text" Content="Texto" HorizontalAlignment="Left" Margin="105,64,0,0" VerticalAlignment="Top" Width="437" Height="126"/>
+            <TextBlock x:Name="lbl_text" Text="text" HorizontalAlignment="Left" Margin="105,64,0,0" VerticalAlignment="Top" Width="437" Height="126" TextWrapping="Wrap"/>
 
             <Grid x:Name="grd_Interacciones" Margin="10,95,452,0">
                 <Label x:Name="lbl_like" Content="like" HorizontalAlignment="Left" Margin="42,10,0,0" VerticalAlignment="Top" Height="25"/>
