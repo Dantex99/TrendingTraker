@@ -42,7 +42,7 @@ namespace TrendingTraker
             lbl_SelectTt.Content = obj;
             Thread hiloStream;
 
-            PopularTweetEsp(obj);
+            PopularTweet(obj);
 
             if (idioma)
             {
@@ -64,19 +64,26 @@ namespace TrendingTraker
 
             hiloStream.Start();
 
+            Thread tweetsStream = new Thread(() => CuentaGlobal());
+            tweetsStream.Start();
+
         }
 
         #region España
         #region Tweets en vivo
         private void TweetTrakerEsp(String obj)
         {
+            //Data
+            int tweetsTotales = 0;
+
+
             int[] tweets = new int[5];
             var stream = Stream.CreateFilteredStream();
             stream.AddTrack(obj);
             //Clasifica cada tweet recogido
             stream.MatchingTweetReceived += (sender, args) =>
             {
-                //Lenguage
+                //Clasificación por lenguage
                 switch (args.Tweet.Language.ToString())
                 {
                     case "English":
@@ -100,6 +107,16 @@ namespace TrendingTraker
                         myPieChart.Series[4].Values[0] = tweets[4];
                         break;
                 }
+
+                tweetsTotales++;
+
+                //Datos
+                this.Dispatcher.Invoke(() =>
+                {
+                    lbl_tTweets.Content = "Tweets: " + Formato(tweetsTotales);
+                });
+
+
             };
 
             stream.StartStreamMatchingAllConditions();
@@ -124,8 +141,10 @@ namespace TrendingTraker
         #region Tweets en vivo
         private void TweetTrakerGlobal(String obj)
         {
+            //Data
+            int tweetsTotales = 0;
+
             int[] tweets = new int[11];
-            int twCount = 0;
             var stream = Stream.CreateFilteredStream();
             stream.AddTrack(obj);
             //Clasifica cada tweet recogido
@@ -183,6 +202,14 @@ namespace TrendingTraker
                         myPieChart.Series[10].Values[0] = tweets[10];
                         break;
                 }
+
+                tweetsTotales++;
+
+                //Datos
+                this.Dispatcher.Invoke(() =>
+                {
+                    lbl_tTweets.Content = "Tweets: " + Formato(tweetsTotales);
+                });
             };
 
             stream.StartStreamMatchingAllConditions();
@@ -211,7 +238,8 @@ namespace TrendingTraker
         #endregion
         #endregion
 
-        public void PopularTweetEsp(String obj)
+        #region Popular
+        public void PopularTweet(String obj)
         {
             var searchParameter = new SearchTweetsParameters(obj)
             {
@@ -233,7 +261,7 @@ namespace TrendingTraker
             //Interacciones
             lbl_like.Content = Formato(tweet.FavoriteCount);
             lbl_rt.Content = Formato(tweet.RetweetCount);
-            lbl_com.Content = tweet.ReplyCount;
+            //lbl_com.Content = tweet.count;
 
             //Extraemos el usuario
             var user = tweet.CreatedBy;
@@ -274,5 +302,25 @@ namespace TrendingTraker
                 return "0";
             }
         }
+        #endregion
+
+        #region Cuenta Global
+        public void CuentaGlobal()
+        {
+            int count = 0;
+            var stream = Stream.CreateSampleStream();
+            stream.TweetReceived += (sender, args) =>
+            {
+                count++;
+                this.Dispatcher.Invoke(() =>
+                {
+                    lbl_gTweets.Content = "Tweets globales: " + Formato(count);
+                });
+            };
+            stream.StartStream();
+            
+        }
+        #endregion
+
     }
 }
