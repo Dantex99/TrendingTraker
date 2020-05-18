@@ -191,7 +191,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\Interrogante.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="img\Verificado.png" />
   </ItemGroup>

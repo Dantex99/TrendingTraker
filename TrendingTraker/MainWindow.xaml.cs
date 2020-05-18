@@ -82,5 +82,15 @@ namespace TrendingTraker
                 setTrendigns(23424950);
             }
         }
+
+        private void img_ayuda_MouseEnter(object sender, MouseEventArgs e)
+        {
+            grd_ayuda.Visibility = Visibility.Visible;
+        }
+
+        private void img_ayuda_MouseLeft(object sender, MouseEventArgs e)
+        {
+            grd_ayuda.Visibility = Visibility.Hidden;
+        }
     }
 }
