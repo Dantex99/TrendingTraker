@@ -10,10 +10,12 @@
         d:DataContext="{d:DesignInstance local:StatisticsWindow}"
         Title="Statistics" Height="450" Width="800">
     <Grid>
+        
         <Label x:Name="lbl_SelectTt" Content="" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top"/>
         <Grid x:Name="grd_data" Margin="6,46,10,327">
-            <Label x:Name="lbl_tTweets" Content="Tweets TT" HorizontalAlignment="Center" Margin="300,10,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="lbl_gTweets" Content="Tweets glb" HorizontalAlignment="Center" Margin="0,10,300,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbl_tTweets" Content="Tweets TT" HorizontalAlignment="Center" Margin="350,10,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbl_gTweets" Content="Tweets glb" HorizontalAlignment="Center" Margin="0,10,350,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbl_impacto" Content="Un x % del mundo habla de esto" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
 
 
         </Grid>
@@ -29,8 +31,8 @@
             <TextBlock x:Name="lbl_text" Text="text" HorizontalAlignment="Left" Margin="105,64,0,0" VerticalAlignment="Top" Width="437" Height="126" TextWrapping="Wrap"/>
 
             <Grid x:Name="grd_Interacciones" Margin="10,95,452,0">
-                <Image x:Name="img_verificado"  Margin="7,7,46,71" Source="img/Verificado.png" />
-
+                <Image x:Name="img_verificado"  Margin="10,7,0,0" Source="img/Verificado.png" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Label x:Name="lbl_verificado" Content="Verif" HorizontalAlignment="Left" Margin="42,7,0,0" VerticalAlignment="Top" Height="25"/>
 
                 <Label x:Name="lbl_like" Content="like" HorizontalAlignment="Left" Margin="42,36,0,0" VerticalAlignment="Top" Height="25"/>
                 <Image x:Name="img_like" HorizontalAlignment="Left" Height="20" Margin="10,39,0,0" VerticalAlignment="Top" Width="20" Source="img/Like.png"/>
@@ -48,6 +50,9 @@
         </Grid>
         <Grid x:Name="grd_chart" Margin="0,92,0,210" HorizontalAlignment="Center">
             <lvc:PieChart x:Name="myPieChart" StartingRotationAngle="0" Margin="0,0,250,0"/>
+            <Label x:Name="lbl_topLenguage" Content="Lenguaje mas utilizado: " HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbl_porcentaje" Content="% respecto al total: " HorizontalAlignment="Left" Margin="85,41,0,0" VerticalAlignment="Top"/>
+
         </Grid>
     </Grid>
 </Window>

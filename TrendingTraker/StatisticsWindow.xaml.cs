@@ -25,6 +25,8 @@ namespace TrendingTraker
     /// </summary>
     public partial class StatisticsWindow : Window
     {
+        int tweetsGlobales = 1;
+        int tweetsTendencia = 1;
 
         //Inicia los procesos de analisis y creado de gráficas
         //muestra por pantalla el elemento de búsqueda
@@ -42,7 +44,8 @@ namespace TrendingTraker
             lbl_SelectTt.Content = obj;
             Thread hiloStream;
 
-            PopularTweet(obj);
+            Thread tweetPopular = new Thread(() => PopularTweet(obj));
+            tweetPopular.Start();
 
             if (localizacion)
             {
@@ -67,15 +70,16 @@ namespace TrendingTraker
             Thread tweetsStream = new Thread(() => CuentaGlobal());
             tweetsStream.Start();
 
+            Thread impacto = new Thread(() => Impacto());
+            impacto.Start();
+
+
         }
 
         #region España
         #region Tweets en vivo
         private void TweetTrakerEsp(String obj)
         {
-            //Data
-            int tweetsTotales = 0;
-
 
             int[] tweets = new int[5];
             var stream = Stream.CreateFilteredStream();
@@ -108,15 +112,13 @@ namespace TrendingTraker
                         break;
                 }
 
-                tweetsTotales++;
+                tweetsTendencia++;
 
                 //Datos
                 this.Dispatcher.Invoke(() =>
                 {
-                    lbl_tTweets.Content = "Tweets: " + Formato(tweetsTotales);
+                    lbl_tTweets.Content = "Tweets: " + Formato(tweetsTendencia);
                 });
-
-
             };
 
             stream.StartStreamMatchingAllConditions();
@@ -140,9 +142,7 @@ namespace TrendingTraker
         #region Global
         #region Tweets en vivo
         private void TweetTrakerGlobal(String obj)
-        {
-            //Data
-            int tweetsTotales = 0;
+        { 
 
             int[] tweets = new int[11];
             var stream = Stream.CreateFilteredStream();
@@ -203,12 +203,12 @@ namespace TrendingTraker
                         break;
                 }
 
-                tweetsTotales++;
+                tweetsTendencia++;
 
                 //Datos
                 this.Dispatcher.Invoke(() =>
                 {
-                    lbl_tTweets.Content = "Tweets: " + Formato(tweetsTotales);
+                    lbl_tTweets.Content = "Tweets: " + Formato(tweetsTendencia);
                 });
             };
 
@@ -238,52 +238,61 @@ namespace TrendingTraker
         #endregion
         #endregion
 
-        #region Popular
+        #region Tweet Popular
         public void PopularTweet(String obj)
         {
-            var searchParameter = new SearchTweetsParameters(obj)
+            do
             {
-                SearchType = SearchResultType.Popular,
-                MaximumNumberOfResults = 1,
-            };
+                var searchParameter = new SearchTweetsParameters(obj)
+                {
+                    SearchType = SearchResultType.Popular,
+                    MaximumNumberOfResults = 1,
+                };
 
-            var tweets = Search.SearchTweets(searchParameter);
+                var tweets = Search.SearchTweets(searchParameter);
 
-            //Extraemos el tweet
-            var tweet = tweets.ToList()[0];
+                for (int i = 0; i < 10; i++)
+                {
+                    //Extraemos el tweet
+                    var tweet = tweets.ToList()[i];
 
-            //Fecha creación
-            lbl_tiempo.Content = tweet.CreatedAt.ToString();
+                    //Fecha creación
+                    lbl_tiempo.Content = tweet.CreatedAt.ToString();
 
-            //Texto
-            lbl_text.Text = tweet.Text;
+                    //Texto
+                    lbl_text.Text = tweet.Text;
 
-            //Interacciones
-            lbl_like.Content = Formato(tweet.FavoriteCount);
-            lbl_rt.Content = Formato(tweet.RetweetCount);
-            //lbl_com.Content = tweet.count;
+                    //Interacciones
+                    lbl_like.Content = Formato(tweet.FavoriteCount);
+                    lbl_rt.Content = Formato(tweet.RetweetCount);
 
-            //Extraemos el usuario
-            var user = tweet.CreatedBy;
+                    //Extraemos el usuario
+                    var user = tweet.CreatedBy;
 
-            //Imagen de perfil
-            img_profile.Source = new BitmapImage(new Uri(user.ProfileImageUrl));
+                    //Imagen de perfil
+                    img_profile.Source = new BitmapImage(new Uri(user.ProfileImageUrl));
 
-            //Verificado
-            if (!user.Verified)
-            {
-                img_verificado.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                img_verificado.Visibility = Visibility.Visible;
-            }
+                    //Verificado
+                    if (!user.Verified)
+                    {
+                        img_verificado.Visibility = Visibility.Hidden;
+                        lbl_verificado.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        img_verificado.Visibility = Visibility.Visible;
+                        lbl_verificado.Visibility = Visibility.Visible;
+                    }
 
-            //Nombre usuario
-            lbl_name.Content = user.Name;
+                    //Nombre usuario
+                    lbl_name.Content = user.Name;
 
-            //@Usuario
-            lbl_arroba.Content = user.ScreenName;
+                    //@Usuario
+                    lbl_arroba.Content = user.ScreenName;
+
+                    Thread.Sleep(15000);
+                }
+            } while (true);
         }
 
         public static string Formato(int number)
@@ -304,23 +313,59 @@ namespace TrendingTraker
         }
         #endregion
 
-        #region Cuenta Global
+        #region Datos
+        //LLeva la cuenta de los tweets publicados en el mundo
         public void CuentaGlobal()
         {
-            int count = 0;
             var stream = Stream.CreateSampleStream();
             stream.TweetReceived += (sender, args) =>
             {
-                count++;
+                tweetsGlobales++;
                 this.Dispatcher.Invoke(() =>
                 {
-                    lbl_gTweets.Content = "Tweets globales: " + Formato(count);
+                    lbl_gTweets.Content = "Tweets globales: " + Formato(tweetsGlobales);
+                    
                 });
             };
             stream.StartStream();
             
         }
-        #endregion
 
+        //Calcula en % el impacto a nivel mundial
+        public void Impacto()
+        {
+            do
+            {
+                
+                decimal impacto = ((decimal)tweetsTendencia / (decimal)tweetsGlobales * 100m);
+                this.Dispatcher.Invoke(() =>
+                {
+                    lbl_impacto.Content = "Un " + String.Format("{0:0}",impacto) + "% del mundo habla de esto";
+                    TopLenguage();
+                });
+                Thread.Sleep(5000);
+            } while (true);
+        }
+
+        public void TopLenguage()
+        {
+            int max = 0;
+            int total = 0;
+            int Serie = 0;
+            for(int i = 0; i < myPieChart.Series.Count; i++)
+            {
+                int value = (int) myPieChart.Series[i].Values[0];
+                if ( value > max && i != myPieChart.Series.Count - 1)
+                {
+                    max = value;
+                    Serie = i;
+                }
+                total += value;
+            }
+            decimal porcentaje = ((decimal)max / (decimal)total * 100m);
+            lbl_topLenguage.Content = "Lenguaje mas hablado: " + myPieChart.Series[Serie].Title;
+            lbl_porcentaje.Content = (String.Format("{0:0}", porcentaje)) + "% respecto al total";
+        }
+        #endregion
     }
 }
