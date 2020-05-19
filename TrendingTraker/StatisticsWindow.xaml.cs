@@ -28,7 +28,7 @@ namespace TrendingTraker
 
         //Inicia los procesos de analisis y creado de gráficas
         //muestra por pantalla el elemento de búsqueda
-        public StatisticsWindow(String obj, bool idioma)
+        public StatisticsWindow(String obj, bool localizacion)
         {
             //Autorización
             InitializeComponent();
@@ -44,7 +44,7 @@ namespace TrendingTraker
 
             PopularTweet(obj);
 
-            if (idioma)
+            if (localizacion)
             {
                 //genera las gráficas
                 GraficaEsp();

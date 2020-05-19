@@ -11,32 +11,33 @@
         Title="Statistics" Height="450" Width="800">
     <Grid>
         <Label x:Name="lbl_SelectTt" Content="" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top"/>
-        <Grid x:Name="grd_data" Margin="0,46,391,215" Width="389">
-            <Separator Margin="0,33,0,115" />
-            <Label x:Name="lbl_tTweets" Content="Tweets TT" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150"/>
-            <Label x:Name="lbl_gTweets" Content="Tweets glb" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" Width="150"/>
+        <Grid x:Name="grd_data" Margin="6,46,10,327">
+            <Label x:Name="lbl_tTweets" Content="Tweets TT" HorizontalAlignment="Center" Margin="300,10,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbl_gTweets" Content="Tweets glb" HorizontalAlignment="Center" Margin="0,10,300,0" VerticalAlignment="Top"/>
 
 
         </Grid>
-        <Grid x:Name="grd_popularTweet" Margin="230,209,10,10">
+        <Grid x:Name="grd_popularTweet" Margin="0,209,0,10" HorizontalAlignment="Center">
             <Image x:Name="img_profile" HorizontalAlignment="Left" Height="80" Margin="10,10,0,0" VerticalAlignment="Top" Width="80"/>
 
-            <Grid x:Name="grd_Personal" Margin="95,10,0,153">
-                <Label x:Name="lbl_name" Content="Nombre" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                <Image x:Name="img_verificado"  Margin="97,6,332,6" Height="25" Source="img/Verificado.png" />
-                <Label x:Name="lbl_arroba" Content="@Nombre" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Center"/>
-                <Label x:Name="lbl_tiempo" Content=".25 min" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Center"/>
+            <Grid x:Name="grd_Personal" Margin="95,10,0,141">
+                <Label x:Name="lbl_name" Content="Nombre" HorizontalAlignment="Left" Margin="10,6,0,5" VerticalAlignment="Center"/>
+                <Label x:Name="lbl_arroba" Content="@Nombre" HorizontalAlignment="Center" Margin="191,6,191,0" VerticalAlignment="Top"/>
+                <Label x:Name="lbl_tiempo" Content=".25 min" HorizontalAlignment="Right" Margin="0,6,30,5" VerticalAlignment="Center"/>
             </Grid>
 
             <TextBlock x:Name="lbl_text" Text="text" HorizontalAlignment="Left" Margin="105,64,0,0" VerticalAlignment="Top" Width="437" Height="126" TextWrapping="Wrap"/>
 
             <Grid x:Name="grd_Interacciones" Margin="10,95,452,0">
-                <Label x:Name="lbl_like" Content="like" HorizontalAlignment="Left" Margin="42,10,0,0" VerticalAlignment="Top" Height="25"/>
-                <Image x:Name="img_like" HorizontalAlignment="Left" Height="20" Margin="10,13,0,0" VerticalAlignment="Top" Width="20" Source="img/Like.png"/>
-                
-                <Label x:Name="lbl_rt" Content="rt" HorizontalAlignment="Left" Margin="42,40,0,0" VerticalAlignment="Top" Height="25"/>
-                <Image x:Name="img_rt" HorizontalAlignment="Left" Height="20" Margin="10,43,0,0" VerticalAlignment="Top" Width="20" Source="img/rt.png"/>
-                
+                <Image x:Name="img_verificado"  Margin="7,7,46,71" Source="img/Verificado.png" />
+
+
+                <Label x:Name="lbl_like" Content="like" HorizontalAlignment="Left" Margin="42,36,0,0" VerticalAlignment="Top" Height="25"/>
+                <Image x:Name="img_like" HorizontalAlignment="Left" Height="20" Margin="10,39,0,0" VerticalAlignment="Top" Width="20" Source="img/Like.png"/>
+
+                <Label x:Name="lbl_rt" Content="rt" HorizontalAlignment="Left" Margin="42,68,0,0" VerticalAlignment="Top" Height="25"/>
+                <Image x:Name="img_rt" HorizontalAlignment="Left" Height="20" Margin="10,71,0,0" VerticalAlignment="Top" Width="20" Source="img/rt.png"/>
+
                 <!--
                 <Label x:Name="lbl_com" Content="1,4 mil" HorizontalAlignment="Left" Margin="42,70,0,0" VerticalAlignment="Top" Height="25"/>
                 <Image x:Name="img_com" HorizontalAlignment="Left" Height="20" Margin="10,73,0,0" VerticalAlignment="Top" Width="20" Source="img/Comment.png"/>
@@ -45,8 +46,8 @@
             </Grid>
 
         </Grid>
-        <Grid x:Name="grd_chart" Margin="10,209,582,10">
-            <lvc:PieChart x:Name="myPieChart" StartingRotationAngle="0" Height="120"/>
+        <Grid x:Name="grd_chart" Margin="0,92,0,210" HorizontalAlignment="Center">
+            <lvc:PieChart x:Name="myPieChart" StartingRotationAngle="0" Margin="0,0,250,0"/>
         </Grid>
     </Grid>
 </Window>
