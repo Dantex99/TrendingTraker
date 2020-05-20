@@ -21,15 +21,21 @@ using LiveCharts.Wpf;
 namespace TrendingTraker
 {
     /// <summary>
-    /// Lógica de interacción para Window1.xaml
+    /// Ventana encargada de la recopilación
+    /// y muestreo de datos por pantalla
     /// </summary>
     public partial class StatisticsWindow : Window
     {
         int tweetsGlobales = 1;
         int tweetsTendencia = 1;
+        String obj;
 
-        //Inicia los procesos de analisis y creado de gráficas
-        //muestra por pantalla el elemento de búsqueda
+        /// <summary>
+        /// Hilo principal que inicia los subprocesos y muestra
+        /// por pantalla el trend escogido por el usuario
+        /// </summary>
+        /// <param name="obj">String correspondiente a la tendencia</param>
+        /// <param name="localizacion">Parametro que transmite si la busqueda es España o Global</param>
         public StatisticsWindow(String obj, bool localizacion)
         {
             //Autorización
@@ -42,32 +48,32 @@ namespace TrendingTraker
                 );
 
             lbl_SelectTt.Content = obj;
-            Thread hiloStream;
+            this.obj = obj;
 
-            PopularTweet(obj);
+            PopularTweet();
+
+            //Hilo de subprocesos mundial o español
+            Thread hiloStream;
 
             if (localizacion)
             {
-                //genera las gráficas
                 GraficaEsp();
 
-                //inicia recogida del trafico de tweets
                 hiloStream = new Thread(() => TweetTrakerEsp(obj));
             }
             else
             {
-                //genera las gráficas
                 GraficaGlobal();
 
-                //inicia recogida del trafico de tweets
                 hiloStream = new Thread(() => TweetTrakerGlobal(obj));
             }
 
-
             hiloStream.Start();
+
 
             Thread tweetsStream = new Thread(() => CuentaGlobal());
             tweetsStream.Start();
+
 
             Thread impacto = new Thread(() => Impacto());
             impacto.Start();
@@ -77,16 +83,22 @@ namespace TrendingTraker
 
         #region España
         #region Tweets en vivo
+
+        /// <summary>
+        /// Hilo que inicia el analisis en vivo de todos los tweets en españa
+        /// </summary>
+        /// <param name="obj">Palabra clave para la búsqueda</param>
         private void TweetTrakerEsp(String obj)
         {
 
             int[] tweets = new int[5];
             var stream = Stream.CreateFilteredStream();
             stream.AddTrack(obj);
-            //Clasifica cada tweet recogido
+
+            //Clasifica cada tweet recogido por lenguaje
             stream.MatchingTweetReceived += (sender, args) =>
             {
-                //Clasificación por lenguage
+
                 switch (args.Tweet.Language.ToString())
                 {
                     case "English":
@@ -125,6 +137,9 @@ namespace TrendingTraker
         }
         #endregion
         #region gráfica
+        /// <summary>
+        /// Genera la gráfica correspondiente a España con menos lenguajes
+        /// </summary>
         private void GraficaEsp()
         {
             myPieChart.Series.Add(new PieSeries { Title = "Ingles", Fill = Brushes.Blue, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
@@ -140,17 +155,20 @@ namespace TrendingTraker
 
         #region Global
         #region Tweets en vivo
+        /// <summary>
+        /// Hilo que inicia el analisis en vivo de todos los tweets en el mundo
+        /// </summary>
+        /// <param name="obj">Palabra clave para la búsqueda</param>
         private void TweetTrakerGlobal(String obj)
         { 
 
             int[] tweets = new int[11];
             var stream = Stream.CreateFilteredStream();
             stream.AddTrack(obj);
-            //Clasifica cada tweet recogido
+            //Clasifica cada tweet recogido por idioma
             stream.MatchingTweetReceived += (sender, args) =>
             {
 
-                //Lenguage
                 switch (args.Tweet.Language.ToString())
                 {
                     case "English":
@@ -218,6 +236,9 @@ namespace TrendingTraker
         #endregion
 
         #region Gráfica
+        /// <summary>
+        /// Genera la gráfica correspondiente a nivel global
+        /// </summary>
         private void GraficaGlobal()
         {
             myPieChart.Series.Add(new PieSeries { Title = "Ingles", Fill = Brushes.Blue, StrokeThickness = 0, Values = new ChartValues<int> { 0 } });
@@ -238,52 +259,55 @@ namespace TrendingTraker
         #endregion
 
         #region Popular
-        public void PopularTweet(String obj)
+        public void PopularTweet()
         {
             var searchParameter = new SearchTweetsParameters(obj)
             {
                 SearchType = SearchResultType.Popular,
-                MaximumNumberOfResults = 1,
+                MaximumNumberOfResults = 1
             };
 
             var tweets = Search.SearchTweets(searchParameter);
-
-            //Extraemos el tweet
-            var tweet = tweets.ToList()[0];
-
-            //Fecha creación
-            lbl_tiempo.Content = tweet.CreatedAt.ToString();
-
-            //Texto
-            lbl_text.Text = tweet.Text;
-
-            //Interacciones
-            lbl_like.Content = Formato(tweet.FavoriteCount);
-            lbl_rt.Content = Formato(tweet.RetweetCount);
-
-            //Extraemos el usuario
-            var user = tweet.CreatedBy;
-
-            //Imagen de perfil
-            img_profile.Source = new BitmapImage(new Uri(user.ProfileImageUrl));
-
-            //Verificado
-            if (!user.Verified)
+            try
             {
-                img_verificado.Visibility = Visibility.Hidden;
-                lbl_verificado.Visibility = Visibility.Hidden;
-            }
-            else
+                //Extraemos el tweet
+                var tweet = tweets.ToList()[0];
+
+                //Fecha creación
+                lbl_tiempo.Content = tweet.CreatedAt.ToString();
+
+                //Texto
+                lbl_text.Text = tweet.Text;
+
+                //Interacciones
+                lbl_like.Content = Formato(tweet.FavoriteCount);
+                lbl_rt.Content = Formato(tweet.RetweetCount);
+
+                //Extraemos el usuario
+                var user = tweet.CreatedBy;
+
+                //Imagen de perfil
+                img_profileSource.ImageSource = new BitmapImage(new Uri(user.ProfileImageUrl));
+                //new ImageSource(new BitmapImage(new Uri(user.ProfileImageUrl)));
+
+                //Verificado
+                if (!user.Verified)
+                {
+                    img_verificado.Visibility = Visibility.Hidden;
+                    lbl_verificado.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    img_verificado.Visibility = Visibility.Visible;
+                    lbl_verificado.Visibility = Visibility.Visible;
+                }
+
+                //Nombre usuario
+                lbl_name.Content = user.Name;
+            }catch(Exception)
             {
-                img_verificado.Visibility = Visibility.Visible;
-                lbl_verificado.Visibility = Visibility.Visible;
+                lbl_text.Text = "No se ha encontrado un tweet destacado en estos momentos";
             }
-
-            //Nombre usuario
-            lbl_name.Content = user.Name;
-
-            //@Usuario
-            lbl_arroba.Content = user.ScreenName;
         }
 
         public static string Formato(int number)
@@ -301,6 +325,11 @@ namespace TrendingTraker
             {
                 return "0";
             }
+        }
+
+        private void btn_recargar_Click(object sender, RoutedEventArgs e)
+        {
+            PopularTweet();
         }
         #endregion
 
@@ -331,7 +360,7 @@ namespace TrendingTraker
                 decimal impacto = ((decimal)tweetsTendencia / (decimal)tweetsGlobales * 100m);
                 this.Dispatcher.Invoke(() =>
                 {
-                    lbl_impacto.Content = "Un " + String.Format("{0:0}",impacto) + "% del mundo habla de esto";
+                    lbl_impacto.Content = "Un " + String.Format("{0:0}",impacto) + "% del mundo";
                     TopLenguage();
                 });
                 Thread.Sleep(5000);
@@ -357,6 +386,25 @@ namespace TrendingTraker
             lbl_topLenguage.Content = "Lenguaje mas hablado: " + myPieChart.Series[Serie].Title;
             lbl_porcentaje.Content = (String.Format("{0:0}", porcentaje)) + "% respecto al total";
         }
+        #endregion
+
+        #region Ayuda
+
+        //Cambia la visibilidad del UI de ayuda
+        private void img_ayuda_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //Pasa a mostrar la ayuda
+            mdc_ayuda.Visibility = Visibility.Visible;
+            grd_datos.Opacity = 0.2;
+
+        }
+
+        private void img_ayuda_MouseLeft(object sender, MouseEventArgs e)
+        {
+            mdc_ayuda.Visibility = Visibility.Hidden;
+            grd_datos.Opacity = 1;
+        }
+
         #endregion
     }
 }

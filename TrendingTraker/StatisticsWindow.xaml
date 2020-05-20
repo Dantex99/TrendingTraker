@@ -6,53 +6,76 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:TrendingTraker"
         mc:Ignorable="d" 
-        d:DesignHeight="300" d:DesignWidth="500" 
         d:DataContext="{d:DesignInstance local:StatisticsWindow}"
-        Title="Statistics" Height="450" Width="800">
-    <Grid>
-        
-        <Label x:Name="lbl_SelectTt" Content="" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top"/>
-        <Grid x:Name="grd_data" Margin="6,46,10,327">
-            <Label x:Name="lbl_tTweets" Content="Tweets TT" HorizontalAlignment="Center" Margin="350,10,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="lbl_gTweets" Content="Tweets glb" HorizontalAlignment="Center" Margin="0,10,350,0" VerticalAlignment="Top"/>
-            <Label x:Name="lbl_impacto" Content="Un x % del mundo habla de esto" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
+        Title="Statistics" Height="480" Width="855"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid x:Name="grd_general">
+        <Grid x:Name="grd_datos">
+            
+            <materialDesign:Card Padding="2" Margin="0,10,0,403" HorizontalAlignment="Center">
+                <Label x:Name="lbl_SelectTt" Content="Prueba" HorizontalAlignment="Center" Margin="60,0" VerticalAlignment="Center"/>
+            </materialDesign:Card>
 
+            <Image x:Name="img_ayuda" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="20" Source="img/Interrogante.png" Margin="0,2,0,0" MouseEnter="img_ayuda_MouseEnter" MouseLeave="img_ayuda_MouseLeft"/>
 
-        </Grid>
-        <Grid x:Name="grd_popularTweet" Margin="0,209,0,10" HorizontalAlignment="Center">
-            <Image x:Name="img_profile" HorizontalAlignment="Left" Height="80" Margin="10,10,0,0" VerticalAlignment="Top" Width="80"/>
+            <materialDesign:Card Padding="2" Margin="174,60,173,343" BorderBrush="#FF1DA1F2" BorderThickness="1" >
+                <Grid x:Name="grd_data" Margin="10,0,6,-10">
+                    <Label x:Name="lbl_tTweets" Content="Tweets TT" HorizontalAlignment="Right" Margin="0,9,5,10" VerticalAlignment="Center" Height="33"/>
+                    <Label x:Name="lbl_gTweets" Content="Tweets glb" HorizontalAlignment="Left" Margin="5,9,0,10" VerticalAlignment="Center" Height="33"/>
+                    <Label x:Name="lbl_impacto" Content="Un x % del mundo habla de esto" HorizontalAlignment="Center" Margin="158,8,128,10" VerticalAlignment="Center" Height="34"/>
+                </Grid>
+            </materialDesign:Card>
 
-            <Grid x:Name="grd_Personal" Margin="95,10,0,141">
-                <Label x:Name="lbl_name" Content="Nombre" HorizontalAlignment="Left" Margin="10,6,0,5" VerticalAlignment="Center"/>
-                <Label x:Name="lbl_arroba" Content="@Nombre" HorizontalAlignment="Center" Margin="191,6,191,0" VerticalAlignment="Top"/>
-                <Label x:Name="lbl_tiempo" Content=".25 min" HorizontalAlignment="Right" Margin="0,6,30,5" VerticalAlignment="Center"/>
+            <Button x:Name="btn_recargar" Content="Recargar" HorizontalAlignment="Right" Margin="0,190,594,0" VerticalAlignment="Top" Width="122" Background="#FF1DA1F2" BorderBrush="#FF042C44" Height="29" Click="btn_recargar_Click"/>
+
+            <materialDesign:Card Padding="2" Margin="0,224,0,10" HorizontalAlignment="Center" >
+
+                <Grid x:Name="grd_popularTweet" Margin="10,10,6,6" HorizontalAlignment="Center" Width="579">
+                    <Ellipse x:Name="img_profile" HorizontalAlignment="Left" Height="80" Margin="10,10,0,0" VerticalAlignment="Top" Width="80">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="img_profileSource" ImageSource="img/twitter-logo-2-1.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <Grid x:Name="grd_Personal" Margin="95,0,0,156">
+                        <Label x:Name="lbl_name" Content="Nombre" HorizontalAlignment="Left" Margin="10,6,0,5" VerticalAlignment="Center"/>
+                        <Label x:Name="lbl_tiempo" Content="Creación" HorizontalAlignment="Right" Margin="0,6,30,5" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <TextBlock x:Name="lbl_text" Text="text" HorizontalAlignment="Left" Margin="105,44,0,0" VerticalAlignment="Top" Width="464" Height="146" TextWrapping="Wrap"/>
+
+                    <Grid x:Name="grd_Interacciones" Margin="10,95,479,5">
+                        <Image x:Name="img_verificado"  Margin="10,7,0,0" Source="img/Verificado.png" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label x:Name="lbl_verificado" Content="Verif" HorizontalAlignment="Left" Margin="42,7,0,0" VerticalAlignment="Top" Height="25"/>
+
+                        <Label x:Name="lbl_like" Content="like" HorizontalAlignment="Left" Margin="42,36,0,0" VerticalAlignment="Top" Height="25"/>
+                        <Image x:Name="img_like" HorizontalAlignment="Left" Height="20" Margin="10,39,0,0" VerticalAlignment="Top" Width="20" Source="img/Like.png"/>
+
+                        <Label x:Name="lbl_rt" Content="rt" HorizontalAlignment="Left" Margin="42,68,0,0" VerticalAlignment="Top" Height="25"/>
+                        <Image x:Name="img_rt" HorizontalAlignment="Left" Height="20" Margin="10,71,0,0" VerticalAlignment="Top" Width="20" Source="img/rt.png"/>
+
+                    </Grid>
+
+                </Grid>
+            </materialDesign:Card>
+
+            <Grid x:Name="grd_chart" Margin="258,111,259,230" HorizontalAlignment="Center" Width="330">
+                <lvc:PieChart x:Name="myPieChart" StartingRotationAngle="0" Margin="0,0,235,0"/>
+                <Label x:Name="lbl_topLenguage" Content="Lenguaje mas utilizado: " HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="lbl_porcentaje" Content="% respecto al total: " HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top"/>
             </Grid>
 
-            <TextBlock x:Name="lbl_text" Text="text" HorizontalAlignment="Left" Margin="105,64,0,0" VerticalAlignment="Top" Width="437" Height="126" TextWrapping="Wrap"/>
-
-            <Grid x:Name="grd_Interacciones" Margin="10,95,452,0">
-                <Image x:Name="img_verificado"  Margin="10,7,0,0" Source="img/Verificado.png" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                <Label x:Name="lbl_verificado" Content="Verif" HorizontalAlignment="Left" Margin="42,7,0,0" VerticalAlignment="Top" Height="25"/>
-
-                <Label x:Name="lbl_like" Content="like" HorizontalAlignment="Left" Margin="42,36,0,0" VerticalAlignment="Top" Height="25"/>
-                <Image x:Name="img_like" HorizontalAlignment="Left" Height="20" Margin="10,39,0,0" VerticalAlignment="Top" Width="20" Source="img/Like.png"/>
-
-                <Label x:Name="lbl_rt" Content="rt" HorizontalAlignment="Left" Margin="42,68,0,0" VerticalAlignment="Top" Height="25"/>
-                <Image x:Name="img_rt" HorizontalAlignment="Left" Height="20" Margin="10,71,0,0" VerticalAlignment="Top" Width="20" Source="img/rt.png"/>
-
-                <!--
-                <Label x:Name="lbl_com" Content="1,4 mil" HorizontalAlignment="Left" Margin="42,70,0,0" VerticalAlignment="Top" Height="25"/>
-                <Image x:Name="img_com" HorizontalAlignment="Left" Height="20" Margin="10,73,0,0" VerticalAlignment="Top" Width="20" Source="img/Comment.png"/>
-                -->
-
-            </Grid>
-
         </Grid>
-        <Grid x:Name="grd_chart" Margin="0,92,0,210" HorizontalAlignment="Center">
-            <lvc:PieChart x:Name="myPieChart" StartingRotationAngle="0" Margin="0,0,250,0"/>
-            <Label x:Name="lbl_topLenguage" Content="Lenguaje mas utilizado: " HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="lbl_porcentaje" Content="% respecto al total: " HorizontalAlignment="Left" Margin="85,41,0,0" VerticalAlignment="Top"/>
 
-        </Grid>
+        <materialDesign:Card x:Name="mdc_ayuda" Padding="2" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="100" Visibility="Hidden">
+            <TextBlock x:Name="txb_ayuda" Text="En esta ventana encontrarás información sobre la actividad y el impacto en directo del treding seleccionado. La información mostrada es una aproximación a la realidad, solo alrededor del 1% de tweets a nivel mundial son registrados" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="10,10,0,0" Width="280" Height="80" TextAlignment="Center"/>
+        </materialDesign:Card>
     </Grid>
 </Window>
