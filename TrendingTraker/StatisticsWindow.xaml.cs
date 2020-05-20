@@ -44,8 +44,7 @@ namespace TrendingTraker
             lbl_SelectTt.Content = obj;
             Thread hiloStream;
 
-            Thread tweetPopular = new Thread(() => PopularTweet(obj));
-            tweetPopular.Start();
+            PopularTweet(obj);
 
             if (localizacion)
             {
@@ -238,61 +237,53 @@ namespace TrendingTraker
         #endregion
         #endregion
 
-        #region Tweet Popular
+        #region Popular
         public void PopularTweet(String obj)
         {
-            do
+            var searchParameter = new SearchTweetsParameters(obj)
             {
-                var searchParameter = new SearchTweetsParameters(obj)
-                {
-                    SearchType = SearchResultType.Popular,
-                    MaximumNumberOfResults = 1,
-                };
+                SearchType = SearchResultType.Popular,
+                MaximumNumberOfResults = 1,
+            };
 
-                var tweets = Search.SearchTweets(searchParameter);
+            var tweets = Search.SearchTweets(searchParameter);
 
-                for (int i = 0; i < 10; i++)
-                {
-                    //Extraemos el tweet
-                    var tweet = tweets.ToList()[i];
+            //Extraemos el tweet
+            var tweet = tweets.ToList()[0];
 
-                    //Fecha creación
-                    lbl_tiempo.Content = tweet.CreatedAt.ToString();
+            //Fecha creación
+            lbl_tiempo.Content = tweet.CreatedAt.ToString();
 
-                    //Texto
-                    lbl_text.Text = tweet.Text;
+            //Texto
+            lbl_text.Text = tweet.Text;
 
-                    //Interacciones
-                    lbl_like.Content = Formato(tweet.FavoriteCount);
-                    lbl_rt.Content = Formato(tweet.RetweetCount);
+            //Interacciones
+            lbl_like.Content = Formato(tweet.FavoriteCount);
+            lbl_rt.Content = Formato(tweet.RetweetCount);
 
-                    //Extraemos el usuario
-                    var user = tweet.CreatedBy;
+            //Extraemos el usuario
+            var user = tweet.CreatedBy;
 
-                    //Imagen de perfil
-                    img_profile.Source = new BitmapImage(new Uri(user.ProfileImageUrl));
+            //Imagen de perfil
+            img_profile.Source = new BitmapImage(new Uri(user.ProfileImageUrl));
 
-                    //Verificado
-                    if (!user.Verified)
-                    {
-                        img_verificado.Visibility = Visibility.Hidden;
-                        lbl_verificado.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        img_verificado.Visibility = Visibility.Visible;
-                        lbl_verificado.Visibility = Visibility.Visible;
-                    }
+            //Verificado
+            if (!user.Verified)
+            {
+                img_verificado.Visibility = Visibility.Hidden;
+                lbl_verificado.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                img_verificado.Visibility = Visibility.Visible;
+                lbl_verificado.Visibility = Visibility.Visible;
+            }
 
-                    //Nombre usuario
-                    lbl_name.Content = user.Name;
+            //Nombre usuario
+            lbl_name.Content = user.Name;
 
-                    //@Usuario
-                    lbl_arroba.Content = user.ScreenName;
-
-                    Thread.Sleep(15000);
-                }
-            } while (true);
+            //@Usuario
+            lbl_arroba.Content = user.ScreenName;
         }
 
         public static string Formato(int number)
