@@ -54,3 +54,9 @@ D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\obj\Release\TrendingTrak
 D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\obj\Release\TrendingTraker.csproj.CopyComplete
 D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\obj\Release\TrendingTraker.exe
 D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\obj\Release\TrendingTraker.pdb
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Release\MaterialDesignColors.dll
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Release\MaterialDesignThemes.Wpf.dll
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Release\MaterialDesignColors.pdb
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Release\MaterialDesignThemes.Wpf.pdb
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Release\MaterialDesignThemes.Wpf.xml
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\obj\Release\App.baml
