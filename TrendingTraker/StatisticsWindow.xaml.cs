@@ -17,6 +17,7 @@ using Tweetinvi.Parameters;
 using Tweetinvi.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Xamarin.Essentials;
 
 namespace TrendingTraker
 {
@@ -316,6 +317,17 @@ namespace TrendingTraker
                 //En caso de no encontrar se imprimirán datos predeterminados
                 lbl_text.Text = "No se ha encontrado un tweet destacado en estos momentos";
             }
+
+        }
+
+        /// <summary>
+        /// Lleva al usuario a la búsqueda de twitter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_goTwitter_Click(object sender, RoutedEventArgs e)
+        {
+            obj
         }
 
         /// <summary>
@@ -419,6 +431,7 @@ namespace TrendingTraker
             lbl_topLenguage.Content = "Lenguaje mas hablado: " + myPieChart.Series[Serie].Title;
             lbl_porcentaje.Content = (String.Format("{0:0}", porcentaje)) + "% respecto al total";
         }
+
         #endregion
 
         #region Ayuda
@@ -449,5 +462,7 @@ namespace TrendingTraker
         }
 
         #endregion
+
+        
     }
 }

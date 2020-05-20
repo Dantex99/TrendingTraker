@@ -24,7 +24,7 @@ namespace TrendingTraker
     public partial class MainWindow : Window
     {
 
-        bool idioma = true;
+        bool idioma = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,8 +35,8 @@ namespace TrendingTraker
                 "hw6OuidUsyT9fSdoLdoxtGt3rZdj2OrUOGB7gMLVBCyrD"
                 );
 
-            //España por defecto
-            setTrendigns(23424950);
+            //Mundial por defecto
+            setTrendigns(1);
 
         }
 

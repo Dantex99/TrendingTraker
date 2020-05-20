@@ -15,7 +15,7 @@
          Background="{DynamicResource MaterialDesignPaper}"
          FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid x:Name="grd_TT">
-        <Button x:Name="btn_location" Content="España" HorizontalAlignment="Center" Margin="204,85,204,0" VerticalAlignment="Top" Width="164" Click="btn_location_Click"/>
+        <Button x:Name="btn_location" Content="Mundial" HorizontalAlignment="Center" Margin="204,85,204,0" VerticalAlignment="Top" Width="164" Click="btn_location_Click"/>
         <Label x:Name="lbl_Title" Content="TrendingTraker" HorizontalAlignment="Center" Margin="0,31,0,0" VerticalAlignment="Top" FontSize="24" HorizontalContentAlignment="Center" Width="173"/>
         <Image x:Name="img_ayuda" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="20" Source="img/Interrogante.png" Margin="0,2,0,0" MouseEnter="img_ayuda_MouseEnter" MouseLeave="img_ayuda_MouseLeft"/>
         <materialDesign:Card Padding="10" Margin="0,141,0,23" HorizontalAlignment="Center">

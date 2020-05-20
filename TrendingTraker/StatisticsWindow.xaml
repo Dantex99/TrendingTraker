@@ -34,6 +34,7 @@
             </materialDesign:Card>
 
             <Button x:Name="btn_recargar" Content="Recargar" HorizontalAlignment="Right" Margin="0,190,594,0" VerticalAlignment="Top" Width="122" Background="#FF1DA1F2" BorderBrush="#FF042C44" Height="29" Click="btn_recargar_Click"/>
+            <Button x:Name="btn_goTwitter" Content="Ir a Twitter" HorizontalAlignment="Right" Margin="0,190,132,0" VerticalAlignment="Top" Width="122" Background="#FF1DA1F2" BorderBrush="#FF042C44" Height="29" Click="btn_goTwitter_Click" />
 
             <materialDesign:Card Padding="2" Margin="0,224,0,10" HorizontalAlignment="Center" >
 
