@@ -160,3 +160,8 @@ D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\MaterialDesign
 D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\MaterialDesignThemes.Wpf.pdb
 D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\MaterialDesignThemes.Wpf.xml
 D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\obj\Debug\App.baml
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\System.Numerics.Vectors.dll
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\Xamarin.Essentials.dll
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\System.Numerics.Vectors.xml
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\Xamarin.Essentials.pdb
+D:\danie\Documents\GitHub\TrendingTraker\TrendingTraker\bin\Debug\Xamarin.Essentials.xml

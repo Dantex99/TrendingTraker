@@ -17,7 +17,6 @@ using Tweetinvi.Parameters;
 using Tweetinvi.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
-using Xamarin.Essentials;
 
 namespace TrendingTraker
 {
@@ -30,6 +29,7 @@ namespace TrendingTraker
         int tweetsGlobales = 1;
         int tweetsTendencia = 1;
         String obj;
+        String url;
 
         /// <summary>
         /// Hilo principal que inicia los subprocesos y muestra
@@ -312,6 +312,10 @@ namespace TrendingTraker
 
                 //Nombre usuario
                 lbl_name.Content = user.Name;
+
+                //Url
+                url = tweet.Url;
+
             }catch(Exception)
             {
                 //En caso de no encontrar se imprimirán datos predeterminados
@@ -327,7 +331,7 @@ namespace TrendingTraker
         /// <param name="e"></param>
         private void btn_goTwitter_Click(object sender, RoutedEventArgs e)
         {
-            obj
+            System.Diagnostics.Process.Start(url);
         }
 
         /// <summary>
