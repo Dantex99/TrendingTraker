@@ -75,7 +75,7 @@
         </Grid>
 
         <materialDesign:Card x:Name="mdc_ayuda" Padding="2" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="100" Visibility="Hidden">
-            <TextBlock x:Name="txb_ayuda" Text="En esta ventana encontrarás información sobre la actividad y el impacto en directo del treding seleccionado. La información mostrada es una aproximación a la realidad, solo alrededor del 1% de tweets a nivel mundial son registrados" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="10,10,0,0" Width="280" Height="80" TextAlignment="Center"/>
+            <TextBlock x:Name="txb_ayuda" Text="En esta ventana encontrarás información sobre la actividad y el impacto en directo del treding seleccionado. La información mostrada es solo una aproximación, unicamente alrededor del 1% de tweets a nivel mundial son registrados" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="10,10,0,0" Width="280" Height="80" TextAlignment="Center"/>
         </materialDesign:Card>
     </Grid>
 </Window>

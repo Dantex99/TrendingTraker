@@ -259,8 +259,15 @@ namespace TrendingTraker
         #endregion
 
         #region Popular
+        /// <summary>
+        /// Clase dedicada a buscar el tweet con mas impacto sobre el trending.
+        /// Puede no encontrar ninguno según el tiempo transcurrido 
+        /// </summary>
         public void PopularTweet()
         {
+            //parámetros de busqueda
+            //1º Buscar por popularidad
+            //2º Devolver un único resultado
             var searchParameter = new SearchTweetsParameters(obj)
             {
                 SearchType = SearchResultType.Popular,
@@ -268,9 +275,10 @@ namespace TrendingTraker
             };
 
             var tweets = Search.SearchTweets(searchParameter);
+            //Extracción de datos
             try
             {
-                //Extraemos el tweet
+                //Tweet
                 var tweet = tweets.ToList()[0];
 
                 //Fecha creación
@@ -283,12 +291,11 @@ namespace TrendingTraker
                 lbl_like.Content = Formato(tweet.FavoriteCount);
                 lbl_rt.Content = Formato(tweet.RetweetCount);
 
-                //Extraemos el usuario
+                //Usuario
                 var user = tweet.CreatedBy;
 
                 //Imagen de perfil
                 img_profileSource.ImageSource = new BitmapImage(new Uri(user.ProfileImageUrl));
-                //new ImageSource(new BitmapImage(new Uri(user.ProfileImageUrl)));
 
                 //Verificado
                 if (!user.Verified)
@@ -306,13 +313,19 @@ namespace TrendingTraker
                 lbl_name.Content = user.Name;
             }catch(Exception)
             {
+                //En caso de no encontrar se imprimirán datos predeterminados
                 lbl_text.Text = "No se ha encontrado un tweet destacado en estos momentos";
             }
         }
 
+        /// <summary>
+        /// Clase para dar formato a los numeros.
+        /// </summary>
+        /// <param name="number">Número a formatear</param>
+        /// <returns>String del número con formato</returns>
         public static string Formato(int number)
         {
-
+            //Pasa a K los números de 4 dígitos o mas
             if (number > 1000)
             {
                 return string.Format("{0:#,0,k}", number);
@@ -327,6 +340,11 @@ namespace TrendingTraker
             }
         }
 
+        /// <summary>
+        /// Ejectua la busqueda del tweet influyente
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_recargar_Click(object sender, RoutedEventArgs e)
         {
             PopularTweet();
@@ -334,7 +352,9 @@ namespace TrendingTraker
         #endregion
 
         #region Datos
-        //LLeva la cuenta de los tweets publicados en el mundo
+        /// <summary>
+        /// Lleva la cuenta de los tweets publicados globalmente
+        /// </summary>
         public void CuentaGlobal()
         {
             var stream = Stream.CreateSampleStream();
@@ -351,27 +371,38 @@ namespace TrendingTraker
             
         }
 
-        //Calcula en % el impacto a nivel mundial
+        /// <summary>
+        /// Calcula en % el impacto a nivel mundial
+        /// </summary>
         public void Impacto()
         {
             do
             {
                 
                 decimal impacto = ((decimal)tweetsTendencia / (decimal)tweetsGlobales * 100m);
+
                 this.Dispatcher.Invoke(() =>
                 {
                     lbl_impacto.Content = "Un " + String.Format("{0:0}",impacto) + "% del mundo";
-                    TopLenguage();
+                    TopLenguaje();
                 });
+
                 Thread.Sleep(5000);
+
             } while (true);
         }
 
-        public void TopLenguage()
+        /// <summary>
+        /// Calcula el lenguaje mas utilizado y su
+        /// influencia en %
+        /// </summary>
+        public void TopLenguaje()
         {
             int max = 0;
             int total = 0;
             int Serie = 0;
+
+            //Recorre los lenguajes guardando el total y el mas hablado
             for(int i = 0; i < myPieChart.Series.Count; i++)
             {
                 int value = (int) myPieChart.Series[i].Values[0];
@@ -382,6 +413,8 @@ namespace TrendingTraker
                 }
                 total += value;
             }
+
+            //Formatea y calcula el %
             decimal porcentaje = ((decimal)max / (decimal)total * 100m);
             lbl_topLenguage.Content = "Lenguaje mas hablado: " + myPieChart.Series[Serie].Title;
             lbl_porcentaje.Content = (String.Format("{0:0}", porcentaje)) + "% respecto al total";
@@ -390,15 +423,25 @@ namespace TrendingTraker
 
         #region Ayuda
 
-        //Cambia la visibilidad del UI de ayuda
+        /// <summary>
+        /// Muestra cuadros de ayuda para el usuario
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void img_ayuda_MouseEnter(object sender, MouseEventArgs e)
         {
-            //Pasa a mostrar la ayuda
+          
             mdc_ayuda.Visibility = Visibility.Visible;
             grd_datos.Opacity = 0.2;
 
         }
 
+        /// <summary>
+        /// Oculta la ayuda y devuelve a su estado normal la ventana
+        /// de análisis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void img_ayuda_MouseLeft(object sender, MouseEventArgs e)
         {
             mdc_ayuda.Visibility = Visibility.Hidden;

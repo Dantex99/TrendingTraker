@@ -17,12 +17,13 @@ using Tweetinvi;
 namespace TrendingTraker
 {
     /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
+    /// Muestra por pantalla los 10 Trending
+    /// mundiales o españoles y permite pasar a la ventana
+    /// de análisis
     /// </summary>
     public partial class MainWindow : Window
     {
 
-        //Idioma
         bool idioma = true;
         public MainWindow()
         {
@@ -34,41 +35,62 @@ namespace TrendingTraker
                 "hw6OuidUsyT9fSdoLdoxtGt3rZdj2OrUOGB7gMLVBCyrD"
                 );
 
-            //Imprime por pantalla las tendencias
+            //España por defecto
             setTrendigns(23424950);
 
         }
 
+        /// <summary>
+        /// Recoge y muestra los trendings de la localización
+        /// pasada por parámetro
+        /// </summary>
+        /// <param name="location">Int correspondiente al WOEID de una localización</param>
         private void setTrendigns(int location)
         {
-            //Bucle recorriendo los objetos
             int i = 0;
 
+            //Extrae los trendings
             var trends = Trends.GetTrendsAt(location);
 
+            //Recorre objetos correspondientes a TextBlock y les pone las trends en orden
             foreach (TextBlock dr in grd_TL.Children)
             {
                 dr.Text = (i + 1) + "º " + trends.Trends.ToList()[i].Name;
                 i++;
             }
 
-            //Texto del label = i+"º #"+Trends.GetTrendsAt(i);
         }
 
+        /// <summary>
+        /// Cierra la ventana actual e inicia la de análisis
+        /// enviando por parametro el trending e idioma seleccionado
+        /// </summary>
+        /// <param name="sender">TextBlock Pulsado</param>
+        /// <param name="e"></param>
         private void lbl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock clicked = (TextBlock)sender;
-            String pos = clicked.Text.Substring(3);
-            StatisticsWindow statistics = new StatisticsWindow(pos, idioma);
+
+            //String del Texblock
+            String trend = clicked.Text.Substring(3);
+
+            //Inicio de StatisticsWindow
+            StatisticsWindow statistics = new StatisticsWindow(trend, idioma);
             statistics.Show();
             this.Close();
         }
 
+        /// <summary>
+        /// Cambia la localización de los trends mostrados
+        /// </summary>
+        /// <param name="sender">El propio botón</param>
+        /// <param name="e"></param>
         private void btn_location_Click(object sender, RoutedEventArgs e)
         {
 
             Button button = (Button)sender;
 
+            //Intercambia la localización
             if (idioma)
             {
                 button.Content = "Mundial";
@@ -83,7 +105,11 @@ namespace TrendingTraker
             }
         }
 
-        //Cambia la visibilidad del UI de ayuda
+        /// <summary>
+        /// Muestra las ventanas de ayuda
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void img_ayuda_MouseEnter(object sender, MouseEventArgs e)
         {
             //Pasa a mostrar la ayuda
@@ -91,6 +117,11 @@ namespace TrendingTraker
 
         }
 
+        /// <summary>
+        /// Oculata las ventanas de ayuda
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void img_ayuda_MouseLeft(object sender, MouseEventArgs e)
         {
             grd_ayuda.Visibility = Visibility.Hidden;
